@@ -1,7 +1,6 @@
 import { useState, useEffect, useCallback } from 'react'
 import { ThemeProvider } from './context/ThemeContext'
 import { ToastProvider } from './components/ui/Toast'
-import { ChatLayout } from './components/Chat/ChatLayout'
 import { WorkspacePage } from './components/Workspace/WorkspacePage'
 import { LoadingScreen } from './components/ui/LoadingScreen'
 import { AuthError } from './components/ui/AuthError'
@@ -13,6 +12,7 @@ import { BYPASS_AUTH, OTCS_OAUTH_URL } from './config/env'
 import { ExternalRedirect } from './components/common/ExternalRedirect'
 import { OTCSOauthPage } from './components/Oauth/OTCSOauthPage'
 import { ChatWithRAGLayout } from './components/ChatWithRAG/ChatWithRAGLayout'
+import { LogoutPage } from './components/Oauth/LogoutPage'
 
 type AuthState = 'loading' | 'authenticated' | 'error' | 'unauthenticated'
 
@@ -85,10 +85,11 @@ function App() {
           {authState === 'unauthenticated' && (
             <Routes>
               <Route path="/otcs/redirect" element={<OTCSOauthPage />} />
+              <Route path="/logout" element={<LogoutPage />} />
               {
                 BYPASS_AUTH  
                   ? <Route path="*" element={<Navigate to="/otcs/redirect" />} />
-                  : <Route path="*" element={<ExternalRedirect url={OTCS_OAUTH_URL} />} />
+                  : <Route path="/" element={<ExternalRedirect url={OTCS_OAUTH_URL} />} />
               }
             </Routes>
           )}

@@ -41,7 +41,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   const logout = useCallback(() => {
     authService.logout()
     setUser(null)
-    window.location.href = '/';
+    window.location.href = '/logout';
   }, [])
 
   const value: AuthContextValue = {

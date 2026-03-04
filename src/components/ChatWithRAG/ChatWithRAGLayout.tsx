@@ -19,6 +19,7 @@ import './Chat.css'
 import { useAuth } from '../../context/AuthContext'
 import { getUserInfo } from '../../utils/get_user_info'
 import { UserInfo } from '../../services/auth'
+import { OTCS_OAUTH_URL } from '../../config/env'
 
 function ragToConversation(rag: GetConversationResponse): Conversation {
   return {
@@ -370,6 +371,10 @@ export function ChatWithRAGLayout() {
               })
             )
           } else if (chunk.type === 'error') {
+            if(chunk.data?.toLowerCase().includes('authentication required')) {
+              window.location.href = OTCS_OAUTH_URL;
+              break;
+            }
             // Handle error
             setConversations((prev) =>
               prev.map((conv) => {

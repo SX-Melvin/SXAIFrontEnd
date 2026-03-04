@@ -1,0 +1,33 @@
+.skeleton {
+  background: var(--color-bg-tertiary);
+  animation: skeletonPulse 1.5s ease-in-out infinite;
+}
+
+@keyframes skeletonPulse {
+  0%, 100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.5;
+  }
+}
+
+.conversation-skeleton {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 10px 12px;
+}
+
+.message-skeleton {
+  display: grid;
+  grid-template-columns: 28px 1fr;
+  gap: 12px;
+  padding: 16px 0;
+}
+
+.message-skeleton-content {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}

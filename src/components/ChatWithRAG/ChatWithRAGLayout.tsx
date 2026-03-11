@@ -20,6 +20,8 @@ import { useAuth } from '../../context/AuthContext'
 import { getUserInfo } from '../../utils/get_user_info'
 import { UserInfo } from '../../services/auth'
 import { refreshOTCSToken } from '../../utils/refresh_otcs_token'
+import { constructLink } from '../../utils/construct_link'
+import { generateUUID } from '../../utils/uuid'
 
 function ragToConversation(rag: GetConversationResponse): Conversation {
   return {
@@ -145,7 +147,7 @@ export function ChatWithRAGLayout() {
         setActiveConversationId(newConversation.id)
         setActiveSessionId(newConversation.id)
         await loadConversations() // Refresh conversation list to get the new conversation
-        window.history.pushState({ sessionId: newConversation.id }, '', `/rag/${newConversation.id}`)
+        window.history.pushState({ sessionId: newConversation.id }, '', constructLink(`/rag/${newConversation.id}`))
       }
     } catch (error) {
       console.error('Failed to create conversation:', error)
@@ -222,7 +224,7 @@ export function ChatWithRAGLayout() {
       let uploadedAttachments = messageAttachments || []
 
       const userMessage: Message = {
-        id: crypto.randomUUID(),
+        id: generateUUID(),
         content,
         role: 'user',
         timestamp: new Date(),
@@ -244,7 +246,7 @@ export function ChatWithRAGLayout() {
       )
 
       // Create placeholder assistant message for streaming
-      const assistantMessageId = crypto.randomUUID()
+      const assistantMessageId = generateUUID()
       const assistantMessage: Message = {
         id: assistantMessageId,
         content: '',
@@ -582,7 +584,7 @@ export function ChatWithRAGLayout() {
         onSelectConversation={async (id) => {
           setActiveConversationId(id)
           setActiveSessionId(id)
-          window.history.pushState({ sessionId: id }, '', `/rag/${id}`)
+          window.history.pushState({ sessionId: id }, '', constructLink(`/rag/${id}`))
           // Fetch full chat history for the selected conversation
           try {
             const result = await getRAGConversationById(Number(id))

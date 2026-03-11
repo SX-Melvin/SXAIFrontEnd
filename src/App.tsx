@@ -16,18 +16,9 @@ import { LogoutPage } from './components/Oauth/LogoutPage'
 
 type AuthState = 'loading' | 'authenticated' | 'error' | 'unauthenticated'
 
-function getRoute(): 'chat' | 'workspace' {
-  const path = window.location.pathname
-  if (path.startsWith('/workspace')) {
-    return 'workspace'
-  }
-  return 'chat'
-}
-
 function App() {
   const [authState, setAuthState] = useState<AuthState>('loading')
   const [errorMessage, setErrorMessage] = useState<string>('')
-  const [_, setRoute] = useState<'chat' | 'workspace'>(getRoute)
 
   const authenticate = useCallback(async () => {
     setAuthState('loading')
@@ -51,15 +42,6 @@ function App() {
     authenticate()
   }, [authenticate])
 
-  // Handle browser navigation
-  useEffect(() => {
-    const handlePopState = () => {
-      setRoute(getRoute())
-    }
-    window.addEventListener('popstate', handlePopState)
-    return () => window.removeEventListener('popstate', handlePopState)
-  }, [])
-
   return (
     <ThemeProvider>
       <ToastProvider>
@@ -79,6 +61,7 @@ function App() {
               <Route path="/" element={<ChatWithRAGLayout />} />
               <Route path="/workspace" element={<WorkspacePage />} />
               <Route path="*" element={<Navigate to="/" />} />
+              <Route path="/logout" element={<LogoutPage />} />
             </Routes>
           )}
 

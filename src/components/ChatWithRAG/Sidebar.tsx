@@ -3,6 +3,7 @@ import type { Conversation } from '../../types/chat'
 import { UserProfile } from '../ui/UserProfile'
 import { ConversationSkeleton } from '../ui/Skeleton'
 import { UserInfo } from '../../services/auth'
+import { constructLink } from '../../utils/construct_link'
 
 interface SidebarProps {
   conversations: Conversation[]
@@ -264,7 +265,7 @@ export function Sidebar({
         </nav>
 
         <div className="sidebar-footer">
-          <a href="/workspace" className="workspace-link">
+          <a href={constructLink("/workspace")} className="workspace-link">
             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
               <path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z" />
             </svg>

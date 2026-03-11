@@ -4,6 +4,7 @@ import { MessageList } from './MessageList'
 import { ChatWithRAGInput } from './ChatWithRAGInput'
 import { ThemeToggle } from '../ui/ThemeToggle'
 import './Chat.css'
+import { generateUUID } from '../../utils/uuid'
 
 // Demo data to showcase all features
 const demoMessages: Message[] = [
@@ -338,7 +339,7 @@ function Chat() {
 
   const handleSend = (content: string) => {
     const userMessage: Message = {
-      id: crypto.randomUUID(),
+      id: generateUUID(),
       content,
       role: 'user',
       timestamp: new Date(),
@@ -350,7 +351,7 @@ function Chat() {
     // Simulate assistant response
     setTimeout(() => {
       const assistantMessage: Message = {
-        id: crypto.randomUUID(),
+        id: generateUUID(),
         content: generateMockResponse(content),
         role: 'assistant',
         timestamp: new Date(),

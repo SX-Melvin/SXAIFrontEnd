@@ -1,4 +1,5 @@
 import type { Conversation, Session, BackendMessage, Message } from '../types/chat'
+import { generateUUID } from '../utils/uuid'
 import { sessionsApi } from './sessions'
 
 const ACTIVE_SESSION_KEY = 'leapcount_active_session'
@@ -37,7 +38,7 @@ function sessionToConversation(session: Session): Conversation {
 function backendMessageToMessage(msg: BackendMessage): Message {
   // Handle different field names from API
   const msgAny = msg as unknown as Record<string, unknown>
-  const id = msg.id || (msgAny.messageId as string) || crypto.randomUUID()
+  const id = msg.id || (msgAny.messageId as string) || generateUUID()
   const timestamp = msg.timestamp || (msgAny.createdAt as string) || new Date().toISOString()
   const content = msg.content || (msgAny.text as string) || ''
 

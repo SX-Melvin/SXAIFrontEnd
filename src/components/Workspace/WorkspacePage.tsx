@@ -14,6 +14,7 @@ import {
 } from '../../services/documents'
 import './WorkspacePage.css'
 import { constructLink } from '../../utils/construct_link'
+import { generateUUID } from '../../utils/uuid'
 
 interface UploadingFile {
   id: string
@@ -233,7 +234,7 @@ export function WorkspacePage() {
     if (files.length === 0) return
 
     const newUploads: UploadingFile[] = files.map((file) => ({
-      id: crypto.randomUUID(),
+      id: generateUUID(),
       name: file.name,
       size: file.size,
       progress: 0,

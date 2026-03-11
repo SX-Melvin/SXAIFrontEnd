@@ -1,5 +1,6 @@
 import { createContext, useContext, useState, useCallback, ReactNode } from 'react'
 import './Toast.css'
+import { generateUUID } from '../../utils/uuid'
 
 type ToastType = 'success' | 'error' | 'info'
 
@@ -19,7 +20,7 @@ export function ToastProvider({ children }: { children: ReactNode }) {
   const [toasts, setToasts] = useState<Toast[]>([])
 
   const showToast = useCallback((message: string, type: ToastType = 'info') => {
-    const id = crypto.randomUUID()
+    const id = generateUUID()
     setToasts(prev => [...prev, { id, message, type }])
 
     // Auto-dismiss after 4 seconds

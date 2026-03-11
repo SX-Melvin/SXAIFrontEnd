@@ -1,5 +1,5 @@
 import { useState, useEffect, useMemo, useRef } from 'react'
-import type { Conversation, User } from '../../types/chat'
+import type { Conversation } from '../../types/chat'
 import { UserProfile } from '../ui/UserProfile'
 import { ConversationSkeleton } from '../ui/Skeleton'
 import { UserInfo } from '../../services/auth'

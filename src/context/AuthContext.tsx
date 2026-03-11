@@ -1,6 +1,7 @@
 import { createContext, useContext, useEffect, useState, useCallback, ReactNode } from 'react'
 import type { User } from '../types/chat'
 import * as authService from '../services/auth'
+import { constructLink } from '../utils/construct_link'
 
 interface AuthState {
   user: User | null
@@ -41,7 +42,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   const logout = useCallback(() => {
     authService.logout()
     setUser(null)
-    window.location.href = '/logout';
+    window.location.href = constructLink("'/logout'");
   }, [])
 
   const value: AuthContextValue = {

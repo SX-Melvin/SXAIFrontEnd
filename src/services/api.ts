@@ -1,5 +1,3 @@
-import { BASE_API_URL } from "../config/env"
-
 const API_BASE = import.meta.env.VITE_API_URL || '/api'
 const API_KEY = import.meta.env.VITE_API_KEY || ''
 const AUTH_TOKEN_KEY = 'leapcount_auth_token'

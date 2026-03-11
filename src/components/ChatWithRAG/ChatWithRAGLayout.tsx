@@ -19,7 +19,7 @@ import './Chat.css'
 import { useAuth } from '../../context/AuthContext'
 import { getUserInfo } from '../../utils/get_user_info'
 import { UserInfo } from '../../services/auth'
-import { OTCS_OAUTH_URL } from '../../config/env'
+import { refreshOTCSToken } from '../../utils/refresh_otcs_token'
 
 function ragToConversation(rag: GetConversationResponse): Conversation {
   return {
@@ -372,7 +372,22 @@ export function ChatWithRAGLayout() {
             )
           } else if (chunk.type === 'error') {
             if(chunk.data?.toLowerCase().includes('authentication required')) {
-              window.location.href = OTCS_OAUTH_URL;
+              await refreshOTCSToken();
+              setConversations((prev) =>
+                prev.map((conv) => {
+                  if (conv.id === convId) {
+                    return {
+                      ...conv,
+                      messages: conv.messages.map((msg) =>
+                        msg.id === assistantMessageId
+                          ? { ...msg, content: 'Sorry, an error occurred. Please try again.', isStreaming: false }
+                          : msg
+                      ),
+                    }
+                  }
+                  return conv
+                })
+              )
               break;
             }
             // Handle error
@@ -654,7 +669,7 @@ export function ChatWithRAGLayout() {
             onStop={handleStop}
             attachments={[]}
             onRemoveAttachment={() => {}}
-            onAddFiles={(files) => {}}
+            onAddFiles={() => {}}
           />
         </div>
       </div>

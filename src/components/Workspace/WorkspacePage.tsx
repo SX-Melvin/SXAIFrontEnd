@@ -13,6 +13,7 @@ import {
   type PendingJob,
 } from '../../services/documents'
 import './WorkspacePage.css'
+import { constructLink } from '../../utils/construct_link'
 
 interface UploadingFile {
   id: string
@@ -435,7 +436,7 @@ export function WorkspacePage() {
   }
 
   const navigateToChat = () => {
-    window.location.href = '/chatbot'
+    window.location.href = constructLink("/chatbot")
   }
 
   // Reset confirm state when clicking outside

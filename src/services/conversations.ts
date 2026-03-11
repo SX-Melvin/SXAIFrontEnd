@@ -1,6 +1,4 @@
-import { BASE_API_URL } from '../config/env'
 import type { Conversation, Session, BackendMessage, Message } from '../types/chat'
-import backendApi from './backend_api'
 import { sessionsApi } from './sessions'
 
 const ACTIVE_SESSION_KEY = 'leapcount_active_session'

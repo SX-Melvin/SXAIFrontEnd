@@ -2,6 +2,7 @@ import { useEffect, useState } from "react"
 import './OTCSOauthPage.css'
 import { loginWithOTCSToken } from "../../services/auth"
 import { BYPASS_AUTH } from "../../config/env"
+import { constructLink } from "../../utils/construct_link"
 
 export function OTCSOauthPage() {
   const [errorMessage, setErrorMessage] = useState<string>('')
@@ -19,7 +20,7 @@ export function OTCSOauthPage() {
         setErrorMessage(req.errorMessage);
         return;
       }
-      window.location.href = '/';
+      window.location.href = constructLink("/");
       return;
     }
 
@@ -30,13 +31,18 @@ export function OTCSOauthPage() {
       const params = new URLSearchParams(hash.substring(1))
       const accessToken = params.get('access_token')
       if (accessToken) {
+        try {
+          window.opener.postMessage({ type: 'otcs_token', access_token: accessToken }, '*')
+        } catch (error) {
+          console.warn('No window opener available', error)
+        }
         localStorage.setItem('otcs_token', accessToken);
         const req = await loginWithOTCSToken(accessToken);
         if(req.errorMessage != null) {
           setErrorMessage(req.errorMessage);
           return;
         }
-        window.location.href = '/';
+        window.location.href = constructLink("/");
       }
     }
   }

@@ -75,7 +75,7 @@ function App() {
 
           {authState === 'authenticated' && (
             <Routes>
-              {/* <Route path="/rag" element={<ChatWithRAGLayout />} /> */}
+              <Route path="/otcs/redirect" element={<OTCSOauthPage />} />
               <Route path="/" element={<ChatWithRAGLayout />} />
               <Route path="/workspace" element={<WorkspacePage />} />
               <Route path="*" element={<Navigate to="/" />} />

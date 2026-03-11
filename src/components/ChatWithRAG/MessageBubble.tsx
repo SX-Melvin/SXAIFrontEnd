@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef } from 'react'
+import { useState, useEffect } from 'react'
 import type { Message } from '../../types/chat'
 import { MarkdownRenderer } from './MarkdownRenderer'
 
@@ -8,7 +8,7 @@ interface MessageBubbleProps {
   onEdit?: (newContent: string) => void
 }
 
-export function MessageBubble({ message, onRegenerate, onEdit }: MessageBubbleProps) {
+export function MessageBubble({ message, onRegenerate }: MessageBubbleProps) {
   // Auto-expand reasoning while streaming with no content, auto-collapse when content arrives
   const isThinking = message.isStreaming && message.reasoning && !message.content
   const [reasoningExpanded, setReasoningExpanded] = useState(isThinking)
